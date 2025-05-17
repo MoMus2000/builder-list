@@ -69,6 +69,21 @@
 </head>
 <body>
   <h1>Create a New Project</h1>
+  <nav style="max-width: 600px; margin: 0 auto 1rem auto; padding: 0 1rem;">
+  <a href="/projects/view" style="
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    background-color: #ddd;
+    color: #333;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+  " onmouseover="this.style.backgroundColor='#ccc'" onmouseout="this.style.backgroundColor='#ddd'">
+    ← Back to Projects
+  </a>
+  </nav>
+
   <form action="/projects/create" method="POST">
     <label for="name">Project Name</label>
     <input type="text" id="name" name="name" required />

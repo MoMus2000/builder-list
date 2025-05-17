@@ -25,8 +25,13 @@ func main(){
   }
 
   engine := html.New("./templates", ".html")
+
   app := fiber.New(fiber.Config{
       Views: engine,
+  })
+
+  app.Add(fiber.MethodGet, "/", func (c *fiber.Ctx) error {
+    return c.Redirect("/projects")
   })
 
   project := app.Group("/projects")
