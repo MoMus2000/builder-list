@@ -18,6 +18,7 @@ func main(){
   db, err := gorm.Open(sqlite.Open("./db/builder-list.db"), &gorm.Config{})
 
   db.AutoMigrate(&models.Project{})
+  db.AutoMigrate(&models.Checklist{})
 
   if err != nil {
     fmt.Printf("DB not Found in ./db/")
@@ -36,7 +37,9 @@ func main(){
 
   project := app.Group("/projects")
 
-  projectRepository := repository.NewProjectRepository(db)
+  projectRepository   := repository.NewProjectRepository(db)
+  checklistRepository := repository.NewChecklistRepository(db)
+
   pr := routes.NewProjectRouter(*projectRepository)
 
   project.Add(fiber.MethodGet, "/"           , pr.ViewProjectList)
@@ -46,10 +49,12 @@ func main(){
   project.Add(fiber.MethodPost,"/create"     , pr.CreateProject)
   project.Add(fiber.MethodPost,"/delete/:ID" , pr.DeleteProject)
     
-  cl := routes.NewCheckListRoute()
+  cl := routes.NewCheckListRoute(checklistRepository)
 
   project.Add(fiber.MethodGet, "/view/:checklist", cl.ViewCheckList)
+  project.Add(fiber.MethodGet, "/checklists", cl.ListAllCheckList)
 
   app.Listen(":8080")
+
 }
 

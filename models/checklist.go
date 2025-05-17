@@ -6,8 +6,8 @@ import (
 
 type Checklist struct {
 	gorm.Model
-  ID uint
+  ID        uint `gorm:"primaryKey"`
+  Name      string
   ProjectID uint
-  Project Project `gorm:"foreignKey:ProjectID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
 

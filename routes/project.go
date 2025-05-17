@@ -26,6 +26,7 @@ func (pr *ProjectRouter) CreateProject(c *fiber.Ctx) error{
   pr.pr.Create(&models.Project{
     Name:        c.FormValue("name"),
     Description: c.FormValue("description"),
+    Checklist:   models.Checklist{Name: "SomeChecklist"},
   })
   return c.Redirect("/projects")
 }
