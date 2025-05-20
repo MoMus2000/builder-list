@@ -7,27 +7,36 @@ class Project(models.Model):
     name        = models.CharField(max_length=200)
     description = models.CharField(max_length=200)
 
-class Design(models.Model):
-    todo_list = models.JSONField(default=list)
-
-class Roof(models.Model):
-    todo_list = models.JSONField(default=list)
-
-class F1(models.Model):
-    todo_list = models.JSONField(default=list)
-
-class F2(models.Model):
-    todo_list = models.JSONField(default=list)
-
-class Basement(models.Model):
-    todo_list = models.JSONField(default=list)
-
 class Comment(models.Model):
-    comment = models.Model(max_length=1000)
+    comment = models.CharField(max_length=1000)
 
 class Todo(models.Model):
     todo = models.CharField(max_length=200)
-    comment = models.ForeignKey(Comment, null=True, blank=True)
+    comment = models.ForeignKey(Comment, null=True, blank=True, on_delete=models.CASCADE)
+
+    design = models.ForeignKey('Design', null=True, blank=True, on_delete=models.CASCADE)
+
+    roof = models.ForeignKey('Roof', null=True, blank=True, on_delete=models.CASCADE)
+
+    basement = models.ForeignKey('Basement', null=True, blank=True, on_delete=models.CASCADE)
+
+    f1 = models.ForeignKey('F1', null=True, blank=True, on_delete=models.CASCADE)
+    f2 = models.ForeignKey('F2', null=True, blank=True, on_delete=models.CASCADE)
+
+class Design(models.Model):
+    pass
+
+class Roof(models.Model):
+    pass
+
+class F1(models.Model):
+    pass
+
+class F2(models.Model):
+    pass
+
+class Basement(models.Model):
+    pass
 
 class Checklist(models.Model):
     name     = models.CharField(max_length=200)

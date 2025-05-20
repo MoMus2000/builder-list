@@ -2,7 +2,7 @@ import json
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 
-from projects.models import Project, Checklist, Design, Basement, F1, F2, Roof
+from projects.models import Project, Checklist, Design, Basement, F1, F2, Roof, Todo
 
 def render_list_projects(request):
     projects = Project.objects.all() #pyright: ignore
@@ -24,28 +24,38 @@ def save_to_checklist(request, project_id, checklist_id):
 
         if data["sectionName"] == "Design":
             design = checklist.design
-            design.todo_list.append(data["text"])
-            design.save()
+            Todo(
+                todo=data["text"],
+                design = design
+            ).save()
 
         if data["sectionName"] == "Roof":
             roof = checklist.roof
-            roof.todo_list.append(data["text"])
-            roof.save()
+            Todo(
+                todo=data["text"],
+                roof = roof
+            ).save()
 
         if data["sectionName"] == "Basement":
             basement = checklist.basement
-            basement.todo_list.append(data["text"])
-            basement.save()
+            Todo(
+                todo=data["text"],
+                basement = basement
+            ).save()
 
         if data["sectionName"] == "1st Floor":
             f1 = checklist.f1
-            f1.todo_list.append(data["text"])
-            f1.save()
+            Todo(
+                todo=data["text"],
+                f1 = f1
+            ).save()
 
         if data["sectionName"] == "2nd Floor":
             f2 = checklist.f2
-            f2.todo_list.append(data["text"])
-            f2.save()
+            Todo(
+                todo=data["text"],
+                f2 = f2
+            ).save()
 
         return JsonResponse({})
 
@@ -83,14 +93,35 @@ def render_checklist(request, id):
         project = project
     ).first() 
 
+    design_todo = Todo.objects.filter( #pyright: ignore
+        design = checklist.design
+    )
+
+    roof_todo = Todo.objects.filter( #pyright: ignore
+        roof = checklist.roof
+    )
+
+    basement_todo = Todo.objects.filter( #pyright: ignore
+        basement = checklist.basement
+    )
+
+    f1_todo = Todo.objects.filter( #pyright: ignore
+        f1 = checklist.f1
+    )
+
+    f2_todo = Todo.objects.filter( #pyright: ignore
+        f2 = checklist.f2
+    )
+
     context = {
         "Project"    : project,
         "Checklist"  : checklist,
+        "design_todo": design_todo,
+        "roof_todo": roof_todo,
+        "basement_todo": basement_todo,
+        "f1_todo": f1_todo,
+        "f2_todo": f2_todo,
     }
-
-    print(checklist)
-
-    print(checklist.design.todo_list)
 
     return render(request, 'checklist.html', context)
 

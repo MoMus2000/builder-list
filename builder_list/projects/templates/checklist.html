@@ -111,8 +111,8 @@ body {
     <div class="section" data-section="Design">
       <h2>Design</h2>
       <ul class="items">
-        {% for design in Checklist.design.todo_list %}
-          <li>{{ design }}</li>
+        {% for design in design_todo%}
+          <li>{{ design.todo }}</li>
         {% endfor %}
       </ul>
       <input type="text" placeholder="Add item..." />
@@ -122,8 +122,8 @@ body {
     <div class="section" data-section="Roof">
       <h2>Roof</h2>
       <ul class="items">
-        {% for design in Checklist.roof.todo_list %}
-          <li>{{ design }}</li>
+        {% for design in roof_todo%}
+          <li>{{ design.todo }}</li>
         {% endfor %}
       </ul>
       <input type="text" placeholder="Add item..." />
@@ -133,8 +133,8 @@ body {
     <div class="section" data-section="1stFloor">
       <h2>1st Floor</h2>
       <ul class="items">
-        {% for design in Checklist.f1.todo_list %}
-          <li>{{ design }}</li>
+        {% for design in f1_todo%}
+          <li>{{ design.todo }}</li>
         {% endfor %}
       </ul>
       <input type="text" placeholder="Add item..." />
@@ -144,8 +144,8 @@ body {
     <div class="section" data-section="2ndFloor">
       <h2>2nd Floor</h2>
       <ul class="items">
-        {% for design in Checklist.f2.todo_list %}
-          <li>{{ design }}</li>
+        {% for design in f2_todo%}
+          <li>{{ design.todo }}</li>
         {% endfor %}
       </ul>
       <input type="text" placeholder="Add item..." />
@@ -155,8 +155,8 @@ body {
     <div class="section" data-section="Basement">
       <h2>Basement</h2>
       <ul class="items">
-        {% for design in Checklist.basement.todo_list %}
-          <li>{{ design }}</li>
+        {% for design in basement_todo%}
+          <li>{{ design.todo }}</li>
         {% endfor %}
       </ul>
       <input type="text" placeholder="Add item..." />
