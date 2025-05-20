@@ -5,7 +5,8 @@ class Project(models.Model):
     description = models.CharField(max_length=200)
 
 class Design(models.Model):
-    todo_list = models.JSONField(default=list)
+    todo_list = models.JSONField(default=list) # make back into a dict, if a comment key
+    # is set that means a comment has been written
 
 class Roof(models.Model):
     todo_list = models.JSONField(default=list)
