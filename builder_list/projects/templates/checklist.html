@@ -110,35 +110,55 @@ body {
   <div id="checklist">
     <div class="section" data-section="Design">
       <h2>Design</h2>
-      <ul class="items"></ul>
+      <ul class="items">
+        {% for design in Checklist.design.todo_list %}
+          <li>{{ design }}</li>
+        {% endfor %}
+      </ul>
       <input type="text" placeholder="Add item..." />
       <button onclick="addItem(this)">Add</button>
     </div>
 
     <div class="section" data-section="Roof">
       <h2>Roof</h2>
-      <ul class="items"></ul>
+      <ul class="items">
+        {% for design in Checklist.roof.todo_list %}
+          <li>{{ design }}</li>
+        {% endfor %}
+      </ul>
       <input type="text" placeholder="Add item..." />
       <button onclick="addItem(this)">Add</button>
     </div>
 
     <div class="section" data-section="1stFloor">
       <h2>1st Floor</h2>
-      <ul class="items"></ul>
+      <ul class="items">
+        {% for design in Checklist.f1.todo_list %}
+          <li>{{ design }}</li>
+        {% endfor %}
+      </ul>
       <input type="text" placeholder="Add item..." />
       <button onclick="addItem(this)">Add</button>
     </div>
 
     <div class="section" data-section="2ndFloor">
       <h2>2nd Floor</h2>
-      <ul class="items"></ul>
+      <ul class="items">
+        {% for design in Checklist.f2.todo_list %}
+          <li>{{ design }}</li>
+        {% endfor %}
+      </ul>
       <input type="text" placeholder="Add item..." />
       <button onclick="addItem(this)">Add</button>
     </div>
 
     <div class="section" data-section="Basement">
       <h2>Basement</h2>
-      <ul class="items"></ul>
+      <ul class="items">
+        {% for design in Checklist.basement.todo_list %}
+          <li>{{ design }}</li>
+        {% endfor %}
+      </ul>
       <input type="text" placeholder="Add item..." />
       <button onclick="addItem(this)">Add</button>
     </div>
@@ -148,12 +168,39 @@ body {
     function addItem(button) {
       const section = button.closest('.section');
       const input = section.querySelector('input[type="text"]');
+      const sectionName = section.querySelector("h2").textContent
       const text = input.value.trim();
       if (text === '') return;
       const ul = section.querySelector('ul.items');
       const li = document.createElement('li');
       li.textContent = text;
       ul.appendChild(li);
+      console.log(text, sectionName)
+
+      const csrftoken = '{{ csrf_token }}';
+      fetch("/projects/{{ Project.id }}/checklist/{{ Checklist.id }}",{
+        method: 'POST', // HTTP method
+          headers: {
+            'Content-Type': 'application/json', // sending JSON data
+            'X-CSRFToken': csrftoken
+          },
+          body: JSON.stringify({
+            sectionName: sectionName,
+            text: text
+          })
+        }).then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.json(); // parse JSON response
+        })
+        .then(data => {
+          console.log('Success:', data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      
       input.value = '';
     }
   </script>
