@@ -9,10 +9,10 @@ class Project(models.Model):
 
 class Comment(models.Model):
     comment = models.CharField(max_length=1000)
+    todo    = models.ForeignKey('Todo', on_delete=models.DO_NOTHING)
 
 class Todo(models.Model):
     todo = models.CharField(max_length=200)
-    comment = models.ForeignKey(Comment, null=True, blank=True, on_delete=models.CASCADE)
 
     design = models.ForeignKey('Design', null=True, blank=True, on_delete=models.CASCADE)
 

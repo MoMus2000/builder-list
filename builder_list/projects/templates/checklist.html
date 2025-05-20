@@ -112,7 +112,7 @@ body {
       <h2>Design</h2>
       <ul class="items">
         {% for design in design_todo%}
-          <li>{{ design.todo }}</li>
+        <a href="#"><li>{{ design.todo }}</li></a>
         {% endfor %}
       </ul>
       <input type="text" placeholder="Add item..." />
