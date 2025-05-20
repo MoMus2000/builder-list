@@ -17,8 +17,15 @@ import (
 func main(){
   db, err := gorm.Open(sqlite.Open("./db/builder-list.db"), &gorm.Config{})
 
-  db.AutoMigrate(&models.Project{})
-  db.AutoMigrate(&models.Checklist{})
+  db.AutoMigrate(
+    &models.Project{},
+    &models.Checklist{},
+    &models.Design{},
+    &models.Roof{},
+    &models.F1{},
+    &models.F2{},
+    &models.Basement{},
+  )
 
   if err != nil {
     fmt.Printf("DB not Found in ./db/")
